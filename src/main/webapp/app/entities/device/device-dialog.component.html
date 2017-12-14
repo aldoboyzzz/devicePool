@@ -1,0 +1,114 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myDeviceLabel">Create or edit a Device</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!device.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="device.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_dsn">Dsn</label>
+            <input type="text" class="form-control" name="dsn" id="field_dsn"
+                [(ngModel)]="device.dsn" required />
+            <div [hidden]="!(editForm.controls.dsn?.dirty && editForm.controls.dsn?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.dsn?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_deviceType">Device Type</label>
+            <select class="form-control" name="deviceType" [(ngModel)]="device.deviceType" id="field_deviceType"  required>
+                <option value="BUELLER">BUELLER</option>
+                <option value="MONTOYA">MONTOYA</option>
+                <option value="SLOANE">SLOANE</option>
+                <option value="TANK">TANK</option>
+                <option value="NEEDLE">NEEDLE</option>
+                <option value="STARK">STARK</option>
+                <option value="MARGO">MARGO</option>
+            </select>
+            <div [hidden]="!(editForm.controls.deviceType?.dirty && editForm.controls.deviceType?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.deviceType?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_buildVariant">Build Variant</label>
+            <select class="form-control" name="buildVariant" [(ngModel)]="device.buildVariant" id="field_buildVariant"  required>
+                <option value="USER">USER</option>
+                <option value="USERDEBUG">USERDEBUG</option>
+            </select>
+            <div [hidden]="!(editForm.controls.buildVariant?.dirty && editForm.controls.buildVariant?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.buildVariant?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_pfm">Pfm</label>
+            <select class="form-control" name="pfm" [(ngModel)]="device.pfm" id="field_pfm"  required>
+                <option value="US">US</option>
+                <option value="GB">GB</option>
+                <option value="IN">IN</option>
+                <option value="DE">DE</option>
+                <option value="AT">AT</option>
+                <option value="JP">JP</option>
+            </select>
+            <div [hidden]="!(editForm.controls.pfm?.dirty && editForm.controls.pfm?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.pfm?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_isFree">Is Free</label>
+            <input type="checkbox" class="form-control" name="isFree" id="field_isFree"
+                [(ngModel)]="device.isFree"  />
+            <div [hidden]="!(editForm.controls.isFree?.dirty && editForm.controls.isFree?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.isFree?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+        <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="form-group">
+            <label class="form-control-label" for="field_ip">Ip</label>
+            <input type="text" class="form-control" name="ip" id="field_ip"
+                [(ngModel)]="device.ip"  />
+        </div>
+
+        <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="form-group">
+            <label class="form-control-label" for="field_viewUrl">View Url</label>
+            <input type="text" class="form-control" name="viewUrl" id="field_viewUrl"
+                   [(ngModel)]="device.viewUrl"  />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" for="field_assignedTo">Assigned To</label>
+            <select class="form-control" id="field_assignedTo" name="assignedTo" [(ngModel)]="device.assignedToId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

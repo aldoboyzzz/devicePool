@@ -1,0 +1,51 @@
+
+<div *ngIf="device">
+    <h2><span>Device</span> {{device.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Dsn</span></dt>
+        <dd>
+            <span>{{device.dsn}}</span>
+        </dd>
+        <dt><span>Device Type</span></dt>
+        <dd>
+            <span>{{device.deviceType}}</span>
+        </dd>
+        <dt><span>Build Variant</span></dt>
+        <dd>
+            <span>{{device.buildVariant}}</span>
+        </dd>
+        <dt><span>Pfm</span></dt>
+        <dd>
+            <span>{{device.pfm}}</span>
+        </dd>
+        <dt><span>Is Free</span></dt>
+        <dd>
+            <span>{{device.isFree}}</span>
+        </dd>
+        <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+        <dt><span>Ip</span></dt>
+        <dd>
+            <span>{{device.ip}}</span>
+        </dd>
+        <dt><span>Assigned To</span></dt>
+        <dd>
+            {{device.assignedToId}}
+        </dd>
+        </div>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'device/'+ device.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

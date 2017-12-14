@@ -1,0 +1,78 @@
+<div>
+    <h2>
+        <span>Devices</span>
+        <!--<button class="btn btn-primary float-right jh-create-entity create-device" [routerLink]="['/', { outlets: { popup: ['device-new'] } }]">
+            //<span class="fa fa-plus"></span>
+            <span >
+            Refresh Devices
+            </span>
+        </button>-->
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="devices">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="dsn"><span>Dsn</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="deviceType"><span>Device Type</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="buildVariant"><span>Build Variant</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="pfm"><span>Pfm</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="isFree"><span>Is Free</span> <span class="fa fa-sort"></span></th>
+            <!--<th jhiSortBy="ip"><span>Ip</span> <span class="fa fa-sort"></span></th>-->
+            <th jhiSortBy="assignedToId"><span>Assigned To</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let device of devices ;trackBy: trackId">
+                <td><a [routerLink]="['../device', device.id ]">{{device.id}}</a></td>
+                <td>{{device.dsn}}</td>
+                <td>{{device.deviceType}}</td>
+                <td>{{device.buildVariant}}</td>
+                <td>{{device.pfm}}</td>
+                <td>{{device.isFree}}</td>
+                <!--<td>{{device.ip}}</td>-->
+                <td>
+                    {{device.assignedToId}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                (click)="viewStream(device.viewUrl)"
+                                class="btn btn-primary btn-sm">
+                            <!--[routerLink]="['/', { outlets: { popup: 'device/'+ device.id + '/viewScreen'} }]"-->
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View Screen</span>
+                        </button>
+                        <!--<a class="d-none d-md-inline" href={{device.viewUrl}} target="_blank">View Screen</a>-->
+                        <!--<button type="submit"
+                                [routerLink]="['../device', device.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View Device Details</span>
+                        </button>-->
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'device/'+ device.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-lock"></span>
+                            <span class="d-none d-md-inline">Acquire Device</span>
+                        </button>
+                        <!--<button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'device/'+ device.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>-->
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

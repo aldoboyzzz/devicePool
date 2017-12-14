@@ -1,0 +1,28 @@
+Hi Piyush,
+
+
+I tested the job locally on Build 418 on Stark ([ro.build.display.id]: [stark-userdebug 6.0 NMAIN1 418]) and the CI test failed with UiAutomator Errors as expected as it was not able to find the required UiObjects. Please find the below Jenkins link for the same -
+
+https://sjc10-zeus.sjc10.amazon.com/jenkins/job/Settings_Mainline_Stark_Sanity_Test/82/console
+
+
+But for some reasons, the device allotted for CI Set up (which is on OTA Pool -  FOS6_MAINLINE_TV_NIGHTLY_U) was still on build 410 (UserDebug) and hence it was not able to detect the failure.
+
+
+And one more thing is - Since this build is highly unstable, We are getting too many App Crash alerts (for OOBE, Settings, Videos, Game Circle, Prime Photos, etc.) during the OOBE Process and even after that. Hence it leaves the App Crash Notifications On the screen which fails the UiAutomator's Operations on the UI.
+
+
+This App Crash notifications were not handled by the tests (neither in OOBE Tests nor in Settings tests). Hence the test will fail even if the Settings Page loads successfully.
+
+
+Solution : Either we have to handle the App Crash Alerts in our tests or the build has to be a stable build without any app crashes. Since the App crashes happen at unexpected times, we cannot handle it in our tests easily.
+
+
+Anil / Bhupendra, is the ota pool (FOS6_MAINLINE_TV_NIGHTLY_U) correct for Stark UserDebug build ? Please Have your say on this.
+
+
+Regards,
+
+Sivakumar Ulaganathan
+
+
